@@ -32,6 +32,8 @@ const init = function () {
   player1El.classList.remove("player--winner");
   player0El.classList.add("player--active");
   player1El.classList.remove("player--active");
+
+  document.getElementById("victoryMessage").classList.add("hidden");
 };
 init();
 
@@ -61,27 +63,32 @@ btnRoll.addEventListener("click", function () {
 });
 
 btnHold.addEventListener("click", function () {
-  if (playing) {
-    scores[activePlayer] += currentScore;
-    // scores[1] = scores[1] + currentScore
+  if (!playing) return;
 
-    document.getElementById(`score--${activePlayer}`).textContent =
-      scores[activePlayer];
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
 
-    if (scores[activePlayer] >= 100) {
-      playing = false;
-      diceEl.classList.add("hidden");
+  if (scores[activePlayer] >= 10) {
+    playing = false;
+    diceEl.classList.add("hidden");
 
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.add("player--winner");
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.remove("player--active");
-    } else {
-      // Switch to the next player
-      switchPlayer();
-    }
+    const winner = document.querySelector(`.player--${activePlayer}`);
+    winner.classList.add("player--winner");
+    winner.classList.remove("player--active");
+
+    // Show victory message
+    document.getElementById("winnerNum").textContent = activePlayer + 1;
+    document.getElementById("victoryMessage").classList.remove("hidden");
+
+    // Launch confetti 🎊
+    confetti({
+      particleCount: 200,
+      spread: 120,
+      origin: { y: 0.6 },
+    });
+  } else {
+    switchPlayer();
   }
 });
 
