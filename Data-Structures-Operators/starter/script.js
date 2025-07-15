@@ -242,13 +242,74 @@ for (const day of Object.keys(restaurant.openingHours)) {
 
 const orderSet = new Set(['pasta', 'pizza', 'pizza', 'risotto', 'pasta']);
 
-console.log(orderSet);
+// console.log(orderSet);
+// console.log(orderSet.size);
 
-console.log(orderSet.has('pizza'));
-console.log(orderSet.size);
+// console.log(orderSet.has('pizza'));
 orderSet.add('Garlic Bread');
+// console.log(orderSet);
 
-console.log(orderSet);
+//Maps
+
+const rest = new Map();
+rest.set('name', 'something');
+rest.set(2, 'other');
+rest.set(3, 'nothing');
+
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+// console.log(rest);
+
+rest.get(2);
+let time1 = 8;
+// console.log(rest.get(time1 > rest.get('open') && time1 < rest.get('close')));
+
+//Strings
+
+const airline = 'air Line';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+
+const checkMiddleSeat = function (seat) {
+  const lastElement = seat.slice(-1);
+
+  if (lastElement === 'B' || lastElement === 'E') {
+    console.log('you got middle sit');
+  } else {
+    console.log('this time you are lucky ');
+  }
+};
+checkMiddleSeat('11B');
+
+const str = 'kIrTan Agravat';
+const strLower = str.toLowerCase();
+const finalStr = str[0].toUpperCase() + strLower.slice(1);
+console.log(finalStr);
+
+console.log(str.split(' '));
+
+// console.log(str.replaceAll('a', '@'));
+/*
+String  methods so far
+include()
+replaceAll()
+replace()
+toLowerCase()
+toUpperCase()
+slice()
+has()
+include()
+startsWith()
+endsWith()
+split()
+etc ...
+*/
 
 // ---===========---------  Coding Challenge #1 ----====================
 
@@ -356,3 +417,58 @@ for (const [team, odd] of Object.entries(game.odds)) {
   const teamstr = team === 'x' ? 'draw' : `victory ${game[team]}`;
   // console.log(teamstr, odd);
 }
+
+//-----------------==========================Coding Challenge #3------------------===================\\
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// 1.
+const events = [...new Set(gameEvents.values())];
+// console.log(events);
+
+//2.
+gameEvents.delete(64);
+
+// console.log(...gameEvents);
+
+const time = [...gameEvents.keys()].pop();
+// console.log(`${time / gameEvents.size}`);
+
+//4.
+
+for (const [min, event] of gameEvents) {
+  const half = min <= 45 ? 'first half : ' : 'second half : ';
+  // console.log(`${half} : ${min}th min => ${event}`);
+}
+
+//------------======================= Coding Challenge #4 ===============----------------\\
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+
+  const rows = text.split('\n');
+
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )} `;
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+  }
+});
